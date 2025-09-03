@@ -207,7 +207,7 @@ require_once ASTRA_THEME_DIR . 'inc/core/deprecated/deprecated-functions.php';
 function show_good_morning_message() {
     if ( is_front_page() || is_home() ) {
         echo '<div style="text-align:center; padding:15px; background:#f5f5f5; border:1px solid #ddd; margin:20px 0; font-size:20px; font-weight:bold; color:#333;"> 
-                Good Morning 🌞 
+                Good Evening 🌞 
               </div>';
     }
 }
