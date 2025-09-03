@@ -1,0 +1,35 @@
+name: Deploy WordPress to AWS
+
+on:
+  push:
+    branches:
+      - production
+      - staging
+      - development
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Deploy to AWS server
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.AWS_HOST }}
+          username: ${{ secrets.AWS_USER }}
+          key: ${{ secrets.AWS_SSH_KEY }}
+          script: |
+            if [ "${{ github.ref_name }}" == "production" ]; then
+              TARGET_DIR="/var/www/production"
+            elif [ "${{ github.ref_name }}" == "staging" ]; then
+              TARGET_DIR="/var/www/staging"
+            else
+              TARGET_DIR="/var/www/html"
+            fi
+
+            cd $TARGET_DIR
+            git pull origin
+            echo "✅ Deployment successful on $TARGET_DIR"
